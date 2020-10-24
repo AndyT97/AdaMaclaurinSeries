@@ -1,0 +1,19 @@
+[GENERATED OBJECT FILE]
+b__main.o
+[PROJECT FILES]
+C:\Users\andy_\AdaProjects\firstproject\firstproject.gpr
+20201024004920 b9c6c8126499b929b8b8430863e1d854
+[BOUND OBJECT FILES]
+C:\Users\andy_\AdaProjects\firstproject\obj\main.o
+[GENERATED SOURCE FILES]
+b__main.ads
+b__main.adb
+b__main.ali
+[RESULTING OPTIONS]
+-LC:\Users\andy_\AdaProjects\firstproject\obj\
+-LC:\Users\andy_\AdaProjects\firstproject\obj\
+-LC:/gnat/2020/lib/gcc/x86_64-pc-mingw32/9.3.1/adalib/
+-static
+-static-libgcc
+C:/gnat/2020/lib/gcc/x86_64-pc-mingw32/9.3.1/adalib/libgnat.a
+-Wl,--stack=0x2000000
