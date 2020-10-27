@@ -33,6 +33,12 @@ procedure Main is
 
    end evaluateSeries;
 
+   function getExactError(exact:Float; approx:Float) return Float is
+   begin
+      return (100.0 * (exact - approx) / exact);
+   end getExactError;
+
+
 begin
    loop
 
