@@ -11,6 +11,7 @@ procedure Main is
    input : Integer;
 
    procedure evaluateSeries is
+      -- TODO change termCount to int maybe
    termCount, rangeInput, xVal, exact,
       exactError, truncError, increments, trunc: Float := 0.0;
       approx : Float := 1.0;
@@ -29,7 +30,34 @@ procedure Main is
       Put(" t     "); Put("   Series     ");Put("    Exact    ");Put("    Exact % Error    ");
       Put("Trunc. % Error");Put_Line("");
 
-     exact := Ada.Numerics.e ** xVal;
+     -- D(t) = e^-t cos(t)
+      exact := Ada.Numerics.e ** xVal;
+
+      for I in 1 .. 10 loop
+         increments := rangeInput / 10.0;
+         xVal := xVal + increments;
+
+         if termCount = 1.0 then
+            approx := 1.0;
+            -- not sure if this is proper way to cast to negative
+            trunc := -xVal;
+         elsif termCount = 2.0 then
+            approx := 1.0 - xVal;
+            trunc := (xVal * xVal * xVal) / 3.0;
+         elsif termCount = 3.0 then
+            approx := 1 - xVal + (xVal * xVal * xVal) / 3.0;
+            trunc := (xVal * xVal * xVal * xVal) / 6.0;
+         elsif termCount = 4.0 then
+            approx := 1 - xVal + (xVal * xVal * xVal) / 3.0 - (xVal * xVal * xVal * xVal) / 6.0;
+            trunc := (xVal * xVal * xVal * xVal * xVal) / 30.0;
+         elsif termCount = 5.0 then
+            approx := 1 - xVal + (xVal * xVal * xVal) / 3.0 - (xVal * xVal * xVal * xVal) / 6.0 +
+            (xVal * xVal * xVal * xVal * xVal) / 30.0;
+            trunc := (xVal * xVal * xVal * xVal * xVal * xVal * xVal) / 630.0;
+         end if;
+
+      end loop;
+
 
    end evaluateSeries;
 
@@ -37,6 +65,16 @@ procedure Main is
    begin
       return (100.0 * (exact - approx) / exact);
    end getExactError;
+
+   function getTruncError(first:Float; approx:Float) return Float is
+   begin
+      return (100.0 * first / approx);
+   end getTruncError;
+
+   procedure printThis is
+   begin
+      Put_Line(" ");
+   end printThis;
 
 
 begin
