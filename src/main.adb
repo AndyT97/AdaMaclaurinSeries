@@ -10,6 +10,7 @@ procedure Main is
    --declare variables here
    input : Integer;
 
+   --This function is returning incorrect values
    function getExactError(exact:Float; approx:Float) return Float is
    begin
       return (100.0 * (exact - approx) / exact);
@@ -22,8 +23,10 @@ procedure Main is
 
    procedure printThis(interval:Float; approx:Float; exact:Float; exactError:Float; relativeError:Float) is
    begin
-      Put_Line (Float'Image (interval));
-     -- Ada.Float_Text_IO.Put(interval,1,6,4);Put("   ");Put(approx,1,6,4);Put("   ");Put(exact,1,6,4);Put("   ");Put(exactError,1,6,4);Put("   ");Put(relativeError,1,6,4);
+      --TODO learn better way to format output
+      Put(Float'Image (interval));Put("   "); Put(Float'Image (approx));Put("   ");
+      Put(Float'Image (exact)); Put("   ");Put(Float'Image (exactError)); Put("   ");
+      Put(Float'Image (relativeError));Put_Line(" ");
    end printThis;
 
    procedure evaluateSeries is
@@ -43,15 +46,17 @@ procedure Main is
       end loop;
 
       Put_Line("MACLAURIN SERIES");
-      Put(" t     "); Put("   Series     ");Put("    Exact    ");Put("    Exact % Error    ");
+      Put("    t       "); Put("     Series      ");Put("    Exact       ");Put(" Exact % Error    ");
       Put("Trunc. % Error");Put_Line("");
 
      -- D(t) = e^-t cos(t)
-      exact := Ada.Numerics.e ** xVal;
+
 
       for I in 1 .. 10 loop
          increments := rangeInput / 10.0;
          xVal := xVal + increments;
+         exact := Ada.Numerics.e ** xVal;
+
 
          if termCount = 1.0 then
             approx := 1.0;
@@ -62,14 +67,14 @@ procedure Main is
             trunc := (xVal * xVal * xVal) / 3.0;
          elsif termCount = 3.0 then
             approx := 1.0 - xVal + (xVal * xVal * xVal) / 3.0;
-            trunc := (xVal * xVal * xVal * xVal) / 6.0;
+            trunc := -(xVal * xVal * xVal * xVal) / 6.0;
          elsif termCount = 4.0 then
             approx := 1.0 - xVal + (xVal * xVal * xVal) / 3.0 - (xVal * xVal * xVal * xVal) / 6.0;
             trunc := (xVal * xVal * xVal * xVal * xVal) / 30.0;
          elsif termCount = 5.0 then
             approx := 1.0 - xVal + (xVal * xVal * xVal) / 3.0 - (xVal * xVal * xVal * xVal) / 6.0 +
             (xVal * xVal * xVal * xVal * xVal) / 30.0;
-            trunc := (xVal * xVal * xVal * xVal * xVal * xVal * xVal) / 630.0;
+            trunc := -(xVal * xVal * xVal * xVal * xVal * xVal * xVal) / 630.0;
          end if;
 
          exactError := getExactError(exact,approx);
