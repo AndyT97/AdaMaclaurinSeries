@@ -1,7 +1,6 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO;
 with Ada.Float_Text_IO;
---with Ada.Numerics.Generic_Elementary_Functions;
 with Ada.Numerics.Elementary_Functions;
 use Ada.Numerics.Elementary_Functions;
 
@@ -10,7 +9,6 @@ procedure Main is
    --declare variables here
    input : Integer;
 
-   --This function is returning incorrect values
    function getExactError(exact:Float; approx:Float) return Float is
    begin
       return (100.0 * (exact - approx) / exact);
@@ -49,13 +47,15 @@ procedure Main is
       Put("    t       "); Put("     Series      ");Put("    Exact       ");Put(" Exact % Error    ");
       Put("Trunc. % Error");Put_Line("");
 
-     -- D(t) = e^-t cos(t)
+
 
 
       for I in 1 .. 10 loop
          increments := rangeInput / 10.0;
          xVal := xVal + increments;
-         exact := Ada.Numerics.e ** xVal;
+
+         -- D(t) = e^-t cos(t)
+         exact := (Ada.Numerics.e ** (-xVal)) * Cos(xVal);
 
 
          if termCount = 1.0 then
